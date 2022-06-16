@@ -2,13 +2,14 @@
 
 drf 특강 1일차 과제
 ## 1. args, kwargs를 사용하는 예제 코드 짜보기
-'''
- def myFun(*args, **kwargs):
-    for arg in args:
-        print(arg)
 
-    for key, value in kwargs.items():
-        print(f"key = {key}, value = {value}")
+'''
+def myFun(*args, **kwargs):
+   for arg in args:
+       print(arg)
+
+   for key, value in kwargs.items():
+       print(f"key = {key}, value = {value}")
 
 myFun('This', 'is', 'an example', arg1 ='Hello', arg2 ='World', arg3='Python')
 '''
