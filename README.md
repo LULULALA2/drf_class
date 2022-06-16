@@ -3,7 +3,7 @@
 drf 특강 1일차 과제
 ### 1. args, kwargs를 사용하는 예제 코드 짜보기
 
-```
+```python
 def myFun(*args, **kwargs):
    for arg in args:
        print(arg)
