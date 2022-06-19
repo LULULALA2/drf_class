@@ -33,7 +33,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=20, null=False, unique=True)
     password = models.CharField(max_length=256, null=False)
     email = models.EmailField(max_length=50, null=False)    
-    join_date = models.DateField(auto_now_add=True)
+    join_date = models.DateTimeField(auto_now_add=True)
     
     # is_active가 False일 경우 계정이 비활성화됨
     is_active = models.BooleanField(default=True) 

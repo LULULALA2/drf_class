@@ -8,6 +8,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+
 class Article(models.Model):
     user = models.ForeignKey('user.User', verbose_name="작성자", on_delete=models.CASCADE)
     title = models.CharField("제목", max_length=50)
@@ -16,3 +17,9 @@ class Article(models.Model):
     
     def __str__(self):
         return f"{self.user.username} 님이 작성하신 글입니다."
+
+
+class Comment(models.Model):
+    article_id = models.ForeignKey('Article', on_delete=models.CASCADE)
+    user = models.ForeignKey('user.User', verbose_name="작성자", on_delete=models.CASCADE)
+    contents = models.TextField("댓글")
