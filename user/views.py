@@ -1,12 +1,33 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.hashers import make_password
+
 from django.views.decorators.csrf import csrf_exempt
 
 from user.serializers import UserSerializer
+from .models import User
+
+
+class SignUpView(APIView):
+
+    permission_class = [permissions.AllowAny]
+
+    def post(self, request):
+        # data = json.loads(request.body)
+        username = request.data.get('username', None)
+        password = request.data.get('password', None)
+        name = request.data.get('name', None)
+        email = request.data.get('email', None)
+        # User.objects.create(email=email, password=password)
+
+        passcode = make_password(password)
+        User(username=username, password=passcode, name=name, email=email).save()
+
+        return Response({"massage": f"회원가입이 완료되었습니다. {username}님 환영합니다!"}, status=status.HTTP_200_OK)
 
 
 class UserView(APIView):
