@@ -1,4 +1,6 @@
 from django.db import models
+import datetime
+from datetime import timedelta
 
 # Create your models here.
 class Category(models.Model):
@@ -14,7 +16,9 @@ class Article(models.Model):
     title = models.CharField("제목", max_length=50)
     category = models.ManyToManyField(Category, verbose_name="카테고리")
     contents = models.TextField("본문")
-    
+    startdate =models.DateTimeField("노출 시작", default=datetime.datetime.now())
+    enddate = models.DateTimeField("노출 종료", default=(datetime.datetime.now()+timedelta(days=7)))
+
     def __str__(self):
         return f"{self.user.username} 님이 작성하신 글입니다."
 
