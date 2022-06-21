@@ -18,6 +18,7 @@ class Article(models.Model):
     contents = models.TextField("본문")
     startdate =models.DateTimeField("노출 시작", default=datetime.datetime.now())
     enddate = models.DateTimeField("노출 종료", default=(datetime.datetime.now()+timedelta(days=7)))
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} 님이 작성하신 글입니다."

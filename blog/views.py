@@ -13,7 +13,7 @@ class ArticleView(APIView):
 
     def get(self, request):
         time = timezone.now()
-        articles = Article.objects.filter(user=request.user,enddate__gt=time).order_by('-startdate')
+        articles = Article.objects.filter(user=request.user, startdate__lte=time, enddate__gt=time).order_by('-created_date')
         titles = [article.title for article in articles]
         for article in articles:
             if article.enddate > time:
