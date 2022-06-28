@@ -7,16 +7,18 @@ from django.db.models import Q
 
 from django.utils import timezone
 
+from drf_class.permissions import IsAdminOrIsAuthenticatedReadOnly
 from .serializers import ProductSerializer
 
 
 
 class ProductView(APIView):
+    permission_classes = [IsAdminOrIsAuthenticatedReadOnly]
 
     def get(self, request):
-        time = timezone.now()        
-
-        qyery = Q(seller=request.user) | Q(start_date__lte=time, end_date__gt=time)
+        time = timezone.now()
+        
+        qyery = Q(seller=request.user) | Q(end_date__gt=time, is_active=True)
         product_list = Product.objects.filter(qyery)
         
         return Response(ProductSerializer(product_list, many=True).data, status=status.HTTP_200_OK) 
@@ -39,6 +41,7 @@ class ProductView(APIView):
         
         # .errors에는 validator에 실패한 필드와 실패 사유가 담겨져 있다.
         return Response(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def put(self, request, obj_id):
         product = Product.objects.get(id=obj_id)
